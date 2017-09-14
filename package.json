@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "moment": "^2.18.1",
     "node-spotify-api": "^1.0.7",
     "request": "^2.81.0",
     "twitter": "^1.7.1"
