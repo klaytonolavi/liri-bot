@@ -6,14 +6,11 @@ var twitterKeys = {
   access_token_secret: 'Zwof6GwV0YKHYn5uQnsBgSpLqsW1F7pl6ZtLndTLyT2tx',
 }
 
-module.exports = twitterKeys;
 
 
-// var spotifyKeys = ({
-//     id: 'b8619d1a285f4145af1f777d33cfbbf9',
-//     secret: 'e8dc74b272ad4bc6a8dafe39866c5524'
-//   });
+var spotifyKeys = {
+  id: 'b8619d1a285f4145af1f777d33cfbbf9',
+  secret: 'e8dc74b272ad4bc6a8dafe39866c5524'
+};
 
-// module.exports = spotifyKeys;
-
-// console.log('this is loaded');
+module.exports = {twitterKeys, spotifyKeys};
