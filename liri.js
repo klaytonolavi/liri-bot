@@ -10,33 +10,35 @@ var movieName = process.argv[3];
 
 var spotifySong = process.argv[3];
 
-var client = new Twitter(twitterKeys);
- 
-  // spotify keys from keys.js
-var spotify = new Spotify(spotifyKeys);
 
-  var command = process.argv[2];
-  
-  if (command === "my-tweets") {
-    // use twitter API to post last 20 tweets
+// spotify keys from keys.js
 
-    var params = {screen_name:"KLiekkio", count: 20};
-    client.get('statuses/user_timeline', params, function (error, tweets, response) {
-      // if error then throw error
-      console.log(tweets);
-      console.log(params);
-      if (error) throw error;
-      // if not error, then...
-      if (!error) {
-          // loop through the tweets and its length and return them
-          for (var i = 0; i < tweets.length; i++) {
-              console.log(tweets[i].text);
-          }
+var command = process.argv[2];
+
+if (command === "my-tweets") {
+  // use twitter API to post last 20 tweets
+  var client = new Twitter(twitterKeys);
+  var params = {
+    screen_name: "KLiekkio",
+    count: 20
+  };
+  client.get('statuses/user_timeline', params, function (error, tweets, response) {
+    // if error then throw error
+    // console.log(tweets);
+    // console.log(params);
+    if (error) throw error;
+    // if not error, then...
+    if (!error) {
+      // loop through the tweets and its length and return them
+      for (var i = 0; i < tweets.length; i++) {
+        console.log(tweets[i].text + " (" + moment(tweets[i].created_at, "ddd MMM D HH:mm:ss ZZ YYYY").format("MMMM D, YYYY; h:mm a") + ")");
       }
-  });
     }
- if (command === "spotify-this-song") {
+  });
+}
+if (command === "spotify-this-song") {
   // use spotify API to post song information
+  var spotify = new Spotify(spotifyKeys);
   spotify
   .search({ type: 'track', query: spotifySong })
   .then(function(response) {
@@ -90,5 +92,7 @@ var spotify = new Spotify(spotifyKeys);
   console.log("data");
   })
 }
+
+module.exports = {twitterKeys};
 
 
