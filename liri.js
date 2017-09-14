@@ -7,31 +7,33 @@ var fs = require("fs");
 var moment = require("moment");
 
 var movieName = process.argv[3];
-var tweets = process.argv[3];
+
 var spotifySong = process.argv[3];
 
-var client = new Twitter(
-    twitterKeys
-  );
+var client = new Twitter(twitterKeys);
  
   // spotify keys from keys.js
-var spotify = new Spotify(
-      spotifyKeys
-  );
+var spotify = new Spotify(spotifyKeys);
 
   var command = process.argv[2];
   
   if (command === "my-tweets") {
     // use twitter API to post last 20 tweets
-    var params = { screen_name: "KLiekkio" };
-    
-        client.get("statuses/user_timeline", params, function(error, tweets, response) {
-            if (!error) {
-                for (i = 0; i < tweets.length; i++) {
-                    console.log(tweets[i].text);
-                }
-            }
-        });
+
+    var params = {screen_name:"KLiekkio", count: 20};
+    client.get('statuses/user_timeline', params, function (error, tweets, response) {
+      // if error then throw error
+      console.log(tweets);
+      console.log(params);
+      if (error) throw error;
+      // if not error, then...
+      if (!error) {
+          // loop through the tweets and its length and return them
+          for (var i = 0; i < tweets.length; i++) {
+              console.log(tweets[i].text);
+          }
+      }
+  });
     }
  if (command === "spotify-this-song") {
   // use spotify API to post song information
@@ -49,14 +51,18 @@ var spotify = new Spotify(
   var nodeArgs = process.argv;
   
   var movieName = "";
-  
+
       for (var i = 3; i < nodeArgs.length; i++) {
           if (i > 3 && i < nodeArgs.length) {
               movieName = movieName + "+" + nodeArgs[i];
           } else {
               movieName += nodeArgs[i];
-          }
+          } 
       }
+
+      // if (process.argv[3] === "") {
+      //     movieName = "Mr.+Nobody"
+      // }
   request("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece", function(error, response, body) {
     
       // If the request is successful (i.e. if the response status code is 200)
@@ -71,7 +77,8 @@ var spotify = new Spotify(
         console.log("This film language is  " + JSON.parse(body).Language);
         console.log("The plot of this film is   " + JSON.parse(body).Plot);
         console.log("The actors in this movie are " + JSON.parse(body).Actors);
-      }
+      } 
+      
     });
 } if (command === "do-what-it-says") {
   // taking text inside random.txt and calling command to run spotify-this-song for the song in random.txt
