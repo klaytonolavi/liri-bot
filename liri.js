@@ -63,6 +63,8 @@ if (command === "spotify-this-song") {
   var nodeArgs = process.argv;
   var titleName = "";
 
+  // for loop to check length of movie name and make sure user can input more than one word movie
+  // if no movie is entered - search mr nobody by default.
   if (!process.argv[3]) {
     titleName = "Mr.+Nobody";
   } else {
@@ -74,7 +76,6 @@ if (command === "spotify-this-song") {
         } 
     }
   }
-  // for loop to check length of movie name and make sure user can input more than one word movie
      
       // request from omdb and takes title name to search for movies 
   request("http://www.omdbapi.com/?t=" + titleName + "&y=&plot=short&apikey=40e9cece", function(error, response, body) {
